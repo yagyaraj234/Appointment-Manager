@@ -8,7 +8,7 @@ import { useState, useEffect, useCallback } from "react";
 function App() {
   const [appointmentList, setAppointmentList] = useState([]);
   const [query, setQuery] = useState("");
-  const [sortBy, setSortby] = useState("petName");
+  const [sortBy, setSortBy] = useState("petName");
   const [orderBy, setOrderBy] = useState("asc");
 
   const filteredAppointments = appointmentList
@@ -43,8 +43,24 @@ function App() {
         <BiArchive className="bold col-red-600 mr-5 mt-1" />
         Your Appointments
       </h1>
-      <AddAppointment></AddAppointment>
-      <Search query={query} onQueryChange={(myQuery) => setQuery(myQuery)} />
+      <AddAppointment
+        onSendAppointment={myAppointment =>
+          setAppointmentList([...appointmentList, myAppointment])
+        }
+        lastId={appointmentList.reduce(
+          (max, item) => Number(item.id) > max ? Number(item.id) : max,
+          0
+        )}
+      />
+      <Search
+        query={query}
+        onQueryChange={(myQuery) => setQuery(myQuery)}
+        orderBy={orderBy}
+        onOrderByChange={(mysort) => setOrderBy(mysort)}
+        sortBy={sortBy}
+        onSortByChange={(mysort) => setSortBy(mysort)}
+      />
+
       <ul className="divide-y divide-gray-200">
         <ul className="divide-y divide-gray-200">
           {filteredAppointments.map((appointment) => (
