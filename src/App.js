@@ -1,7 +1,9 @@
-import { BiArchive } from "react-icons/bi";
+import { BiArchive,BiTrash } from "react-icons/bi";
 import "./App.css";
 import Search from "./components/Search";
 import AddAppointment from "./components/AddAppointment";
+import appointmentList from './data.json';
+import AppointmentInfo from "./components/Appointmentinfo";
 
 function App() {
   return (
@@ -12,6 +14,17 @@ function App() {
       </h1>
       <AddAppointment></AddAppointment>
       <Search></Search>
+      <ul className="divide-y divide-gray-200">
+      <ul className="divide-y divide-gray-200">
+        {appointmentList
+          .map(appointment => (
+            <AppointmentInfo key={appointment.id}
+              appointment={appointment}
+            />
+          ))
+        }
+      </ul>
+      </ul>
     </div>
   );
 }
